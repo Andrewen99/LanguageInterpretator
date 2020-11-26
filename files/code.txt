@@ -1,0 +1,12 @@
+x = 5 + 8
+y = x + 5
+print "и так сойдет";
+print x, " и так сойдет";
+if 2*x < y {
+    print "---";
+    print "Мы внутри if";
+    print 2*x, " bigger than ", y;
+    print "---";
+}
+print y, " это y";
+print y*100, " это y * 100";
