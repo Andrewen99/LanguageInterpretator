@@ -61,7 +61,7 @@ class Program(codePath: String) {
             currentLine++
         }
         if (lines[currentLine].contains("}")) {
-            ifBrackets.removeAt(brackets.lastIndex)
+            ifBrackets.removeAt(ifBrackets.lastIndex)
             currentLine++
         }
     }

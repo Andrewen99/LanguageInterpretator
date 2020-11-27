@@ -1,0 +1,17 @@
+a = (5+8)*5
+b = a + 5
+print "и так сойдет";
+print a, " и так сойдет";
+if 2*a > b {
+    print "---";
+    print "Мы внутри if";
+    print 2*a, " bigger than ", b;
+    print "---";
+}
+else {
+    print "+++";
+    print "Мы внутри else";
+    print "+++";
+}
+print a, " это a";
+print b*100, " это b * 100";
