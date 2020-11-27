@@ -5,6 +5,7 @@ class Program(codePath: String) {
     val lines = FileReader.parseFile(codePath)
     var vars = hashMapOf<Char, Int>()
     var brackets = mutableListOf<Char>()
+    var ifBrackets = mutableListOf<Char>()
     var ifFlag = false
 
     var currentLine = 0
@@ -15,22 +16,22 @@ class Program(codePath: String) {
 
     fun innerIfProgram(flag: Boolean) {
         if (lines[currentLine].contains("{")) {
-            brackets.add('{')
+            ifBrackets.add('{')
             currentLine++
         }
         else {
             currentLine++
             if (lines[currentLine].contains("{")) {
-                brackets.add('{')
+                ifBrackets.add('{')
                 currentLine++
             } else {
                 throw MyException(this, "Где '{' а?")
             }
         }
 
-        while (brackets.size > 0 && !isFinished()) {
+        while (ifBrackets.size > 0 && !isFinished()) {
             findBrackets()
-            if (brackets.size > 0 && !isFinished()) {
+            if (ifBrackets.size > 0 && !isFinished()) {
                 if (flag) {
                     StatementHelper.defineAndExecStatement(this)
                 } else {
@@ -56,22 +57,24 @@ class Program(codePath: String) {
 
     fun findBrackets() {
         if (lines[currentLine].contains("{")) {
-            brackets.add('{')
+            ifBrackets.add('{')
             currentLine++
         }
         if (lines[currentLine].contains("}")) {
-            brackets.removeAt(brackets.lastIndex)
+            ifBrackets.removeAt(brackets.lastIndex)
             currentLine++
         }
     }
 
     fun findForBrackets() {
-        if (lines[currentLine].contains("{")) {
-            brackets.add('{')
-            currentLine++
-        }
-        if (lines[currentLine].contains("}")) {
-            brackets.removeAt(brackets.lastIndex)
+        if (!lines[currentLine].trim().startsWith("if")) {
+            if (lines[currentLine].contains("{")) {
+                brackets.add('{')
+                currentLine++
+            }
+            if (lines[currentLine].contains("}")) {
+                brackets.removeAt(brackets.lastIndex)
+            }
         }
     }
 
