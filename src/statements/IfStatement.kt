@@ -10,7 +10,17 @@ class IfStatement : Statement() {
         var boolExpression = getBoolExpression(line)
         program.ifFlag = boolExpression.calculate(program)
         program.ifPlot()
+    }
 
+    fun Program.ifPlot() {
+        innerIfProgram(ifFlag)
+        elsePlot()
+        ifFlag = false
+    }
 
+    fun Program.elsePlot() {
+        if (lines[currentLine].contains("else")) {
+            innerIfProgram(!ifFlag)
+        }
     }
 }

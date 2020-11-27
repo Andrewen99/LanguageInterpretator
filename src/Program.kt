@@ -13,7 +13,7 @@ class Program(codePath: String) {
         return lines.lastIndex < currentLine
     }
 
-    fun ifPlot() {
+    fun innerIfProgram(flag: Boolean) {
         if (lines[currentLine].contains("{")) {
             brackets.add('{')
             currentLine++
@@ -31,14 +31,27 @@ class Program(codePath: String) {
         while (brackets.size > 0 && !isFinished()) {
             findBrackets()
             if (brackets.size > 0 && !isFinished()) {
-                if (ifFlag) {
+                if (flag) {
                     StatementHelper.defineAndExecStatement(this)
                 } else {
                     currentLine++
                 }
             }
         }
-        ifFlag = false
+    }
+
+    fun innerForProgram() {
+        if (lines[currentLine].contains("{")) {
+            brackets.add('{')
+            currentLine++
+        }
+
+        while (brackets.size > 0 && !isFinished()) {
+            findForBrackets()
+            if (brackets.size > 0 && !isFinished()) {
+                StatementHelper.defineAndExecStatement(this)
+            }
+        }
     }
 
     fun findBrackets() {
@@ -49,6 +62,16 @@ class Program(codePath: String) {
         if (lines[currentLine].contains("}")) {
             brackets.removeAt(brackets.lastIndex)
             currentLine++
+        }
+    }
+
+    fun findForBrackets() {
+        if (lines[currentLine].contains("{")) {
+            brackets.add('{')
+            currentLine++
+        }
+        if (lines[currentLine].contains("}")) {
+            brackets.removeAt(brackets.lastIndex)
         }
     }
 

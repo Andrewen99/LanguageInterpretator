@@ -36,3 +36,11 @@ fun checkVarExist(program: Program, variable: Char): Boolean {
     return program.vars.containsKey(variable)
 }
 
+fun getVar(line: String): Char? {
+    var variable = line.split("=")[0].trim()
+    if (variable.length == 1) {
+        return variable[0]
+    }
+    return null
+}
+
